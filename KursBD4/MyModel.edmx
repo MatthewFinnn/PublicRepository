@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MyDBModel" Provider="Npgsql" ProviderManifestToken="11.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Albums">
+          <Key>
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="id_album" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="release" Type="date" />
+          <Property Name="cover" Type="text" />
+          <Property Name="id_group" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="id_group" />
+          </Key>
+          <Property Name="id_group" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="group_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="country" Type="varchar" MaxLength="50" />
+          <Property Name="genre" Type="varchar" MaxLength="100" />
+          <Property Name="debut" Type="date" />
+        </EntityType>
+        <EntityType Name="mysek1">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="link_audio" Type="text" />
+          <Property Name="link_video" Type="text" />
+          <Property Name="id_album" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mysek2">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="link_audio" Type="text" />
+          <Property Name="link_video" Type="text" />
+          <Property Name="id_album" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="mysekAll">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="link_audio" Type="text" />
+          <Property Name="link_video" Type="text" />
+          <Property Name="id_album" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Performers">
+          <Key>
+            <PropertyRef Name="id_performer" />
+          </Key>
+          <Property Name="id_performer" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="alias" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="birthdate" Type="date" />
+          <Property Name="birthplace" Type="varchar" MaxLength="50" />
+          <Property Name="height" Type="int2" />
+          <Property Name="weight" Type="int2" />
+          <Property Name="position" Type="varchar" MaxLength="100" />
+          <Property Name="image" Type="text" />
+          <Property Name="additional" Type="text" />
+          <Property Name="id_group" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Songs">
+          <Key>
+            <PropertyRef Name="id_songs" />
+          </Key>
+          <Property Name="id_songs" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="link_audio" Type="text" />
+          <Property Name="link_video" Type="text" />
+          <Property Name="id_album" Type="int4" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_ag">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Albums" Type="Self.Albums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id_group" />
+            </Principal>
+            <Dependent Role="Albums">
+              <PropertyRef Name="id_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pg">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Performers" Type="Self.Performers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id_group" />
+            </Principal>
+            <Dependent Role="Performers">
+              <PropertyRef Name="id_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s2a">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="mysek1" Type="Self.mysek1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="mysek1">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s2a1">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="mysek2" Type="Self.mysek2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="mysek2">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s2a2">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="mysekAll" Type="Self.mysekAll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="mysekAll">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SongsAlbums">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="Songs" Type="Self.Songs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="Songs">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MyDBModelContainer">
+          <EntitySet Name="Albums" EntityType="Self.Albums" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="public" store:Type="Tables" />
+          <EntitySet Name="mysek1" EntityType="Self.mysek1" Schema="public" store:Type="Tables" />
+          <EntitySet Name="mysek2" EntityType="Self.mysek2" Schema="public" store:Type="Tables" />
+          <EntitySet Name="mysekAll" EntityType="Self.mysekAll" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Performers" EntityType="Self.Performers" Schema="public" store:Type="Tables" />
+          <EntitySet Name="Songs" EntityType="Self.Songs" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="fk_ag" Association="Self.fk_ag">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Albums" EntitySet="Albums" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pg" Association="Self.fk_pg">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Performers" EntitySet="Performers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s2a" Association="Self.fk_s2a">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="mysek1" EntitySet="mysek1" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s2a1" Association="Self.fk_s2a1">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="mysek2" EntitySet="mysek2" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s2a2" Association="Self.fk_s2a2">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="mysekAll" EntitySet="mysekAll" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SongsAlbums" Association="Self.fk_SongsAlbums">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Songs" EntitySet="Songs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Albums">
+          <Key>
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="id_album" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="release" Type="DateTime" Precision="0" />
+          <Property Name="cover" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_group" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="Self.fk_ag" FromRole="Albums" ToRole="Groups" />
+          <NavigationProperty Name="mysek1" Relationship="Self.fk_s2a" FromRole="Albums" ToRole="mysek1" />
+          <NavigationProperty Name="mysek2" Relationship="Self.fk_s2a1" FromRole="Albums" ToRole="mysek2" />
+          <NavigationProperty Name="mysekAll" Relationship="Self.fk_s2a2" FromRole="Albums" ToRole="mysekAll" />
+          <NavigationProperty Name="Songs" Relationship="Self.fk_SongsAlbums" FromRole="Albums" ToRole="Songs" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="id_group" />
+          </Key>
+          <Property Name="id_group" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="group_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="genre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="debut" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Albums" Relationship="Self.fk_ag" FromRole="Groups" ToRole="Albums" />
+          <NavigationProperty Name="Performers" Relationship="Self.fk_pg" FromRole="Groups" ToRole="Performers" />
+        </EntityType>
+        <EntityType Name="mysek1">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="link_audio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_album" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Albums" Relationship="Self.fk_s2a" FromRole="mysek1" ToRole="Albums" />
+        </EntityType>
+        <EntityType Name="mysek2">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="link_audio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_album" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Albums" Relationship="Self.fk_s2a1" FromRole="mysek2" ToRole="Albums" />
+        </EntityType>
+        <EntityType Name="mysekAll">
+          <Key>
+            <PropertyRef Name="name" />
+            <PropertyRef Name="id_album" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="link_audio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_album" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Albums" Relationship="Self.fk_s2a2" FromRole="mysekAll" ToRole="Albums" />
+        </EntityType>
+        <EntityType Name="Performers">
+          <Key>
+            <PropertyRef Name="id_performer" />
+          </Key>
+          <Property Name="id_performer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="alias" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="birthdate" Type="DateTime" Precision="0" />
+          <Property Name="birthplace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="height" Type="Int16" />
+          <Property Name="weight" Type="Int16" />
+          <Property Name="position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="additional" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_group" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="Self.fk_pg" FromRole="Performers" ToRole="Groups" />
+        </EntityType>
+        <EntityType Name="Songs">
+          <Key>
+            <PropertyRef Name="id_songs" />
+          </Key>
+          <Property Name="id_songs" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="link_audio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="link_video" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id_album" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Albums" Relationship="Self.fk_SongsAlbums" FromRole="Songs" ToRole="Albums" />
+        </EntityType>
+        <Association Name="fk_ag">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Albums" Type="Self.Albums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id_group" />
+            </Principal>
+            <Dependent Role="Albums">
+              <PropertyRef Name="id_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s2a">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="mysek1" Type="Self.mysek1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="mysek1">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s2a1">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="mysek2" Type="Self.mysek2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="mysek2">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_s2a2">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="mysekAll" Type="Self.mysekAll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="mysekAll">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SongsAlbums">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="Songs" Type="Self.Songs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="id_album" />
+            </Principal>
+            <Dependent Role="Songs">
+              <PropertyRef Name="id_album" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pg">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Performers" Type="Self.Performers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id_group" />
+            </Principal>
+            <Dependent Role="Performers">
+              <PropertyRef Name="id_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albums" EntityType="Self.Albums" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" />
+          <EntitySet Name="mysek1" EntityType="Self.mysek1" />
+          <EntitySet Name="mysek2" EntityType="Self.mysek2" />
+          <EntitySet Name="mysekAll" EntityType="Self.mysekAll" />
+          <EntitySet Name="Performers" EntityType="Self.Performers" />
+          <EntitySet Name="Songs" EntityType="Self.Songs" />
+          <AssociationSet Name="fk_ag" Association="Self.fk_ag">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Albums" EntitySet="Albums" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s2a" Association="Self.fk_s2a">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="mysek1" EntitySet="mysek1" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s2a1" Association="Self.fk_s2a1">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="mysek2" EntitySet="mysek2" />
+          </AssociationSet>
+          <AssociationSet Name="fk_s2a2" Association="Self.fk_s2a2">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="mysekAll" EntitySet="mysekAll" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SongsAlbums" Association="Self.fk_SongsAlbums">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Songs" EntitySet="Songs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pg" Association="Self.fk_pg">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Performers" EntitySet="Performers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MyDBModelContainer" CdmEntityContainer="MyDBEntities">
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="MyDBModel.Albums">
+              <MappingFragment StoreEntitySet="Albums">
+                <ScalarProperty Name="id_album" ColumnName="id_album" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="release" ColumnName="release" />
+                <ScalarProperty Name="cover" ColumnName="cover" />
+                <ScalarProperty Name="id_group" ColumnName="id_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="MyDBModel.Groups">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="id_group" ColumnName="id_group" />
+                <ScalarProperty Name="group_name" ColumnName="group_name" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="debut" ColumnName="debut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mysek1">
+            <EntityTypeMapping TypeName="MyDBModel.mysek1">
+              <MappingFragment StoreEntitySet="mysek1">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link_audio" ColumnName="link_audio" />
+                <ScalarProperty Name="link_video" ColumnName="link_video" />
+                <ScalarProperty Name="id_album" ColumnName="id_album" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mysek2">
+            <EntityTypeMapping TypeName="MyDBModel.mysek2">
+              <MappingFragment StoreEntitySet="mysek2">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link_audio" ColumnName="link_audio" />
+                <ScalarProperty Name="link_video" ColumnName="link_video" />
+                <ScalarProperty Name="id_album" ColumnName="id_album" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mysekAll">
+            <EntityTypeMapping TypeName="MyDBModel.mysekAll">
+              <MappingFragment StoreEntitySet="mysekAll">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link_audio" ColumnName="link_audio" />
+                <ScalarProperty Name="link_video" ColumnName="link_video" />
+                <ScalarProperty Name="id_album" ColumnName="id_album" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Performers">
+            <EntityTypeMapping TypeName="MyDBModel.Performers">
+              <MappingFragment StoreEntitySet="Performers">
+                <ScalarProperty Name="id_performer" ColumnName="id_performer" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="birthplace" ColumnName="birthplace" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="additional" ColumnName="additional" />
+                <ScalarProperty Name="id_group" ColumnName="id_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Songs">
+            <EntityTypeMapping TypeName="MyDBModel.Songs">
+              <MappingFragment StoreEntitySet="Songs">
+                <ScalarProperty Name="id_songs" ColumnName="id_songs" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link_audio" ColumnName="link_audio" />
+                <ScalarProperty Name="link_video" ColumnName="link_video" />
+                <ScalarProperty Name="id_album" ColumnName="id_album" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
